@@ -3,10 +3,18 @@ import joblib
 import pandas as pd
 from fastapi import FastAPI
 from fastapi.responses import HTMLResponse
+from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
+
 
 BASE_DIR = Path(__file__).parent
 app=FastAPI()
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:5173","http://localhost:127.0.0.1:5173"],
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 model1= joblib.load(BASE_DIR / "house_price_model.joblib")
 
