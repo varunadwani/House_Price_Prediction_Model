@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import './App.css'
 
 const App = () => {
   const [sqft, setSqft] = useState("");
@@ -46,40 +47,45 @@ const App = () => {
     }
   }
 
-  return (
-    <div>
+    return (
+    <div className="container">
       <h1>House Price Prediction</h1>
-      <p>Welcome to the House Price Prediction App!</p>
+      <p className="subtitle">Enter the house details below to get an estimated price.</p>
 
-      <form onSubmit={handleSubmit}>
-      {/* this means that we will call this function */}
-        <div>
-          <label htmlFor="sqft">Area(sqft)</label>
-          <input type="number" id="sqft" min="0" step="any" required value={sqft} onChange={(e)=>setSqft(e.target.value)}/>
+      <form className="form" onSubmit={handleSubmit}>
+        <div className="field">
+          <label htmlFor="sqft">Area (sqft)</label>
+          <input type="number" id="sqft" placeholder="e.g. 2000" min="0" step="any" required value={sqft} onChange={(e) => setSqft(e.target.value)} />
         </div>
 
-        <div>
+        <div className="field">
           <label htmlFor="bedrooms">Bedrooms</label>
-          <input type="number" id="bedrooms" min="0" required value={bedrooms} onChange={(e)=>setBedrooms(e.target.value)}/>
+          <input type="number" id="bedrooms" placeholder="e.g. 3" min="0" required value={bedrooms} onChange={(e) => setBedrooms(e.target.value)} />
         </div>
 
-        <div>
-          <label htmlFor="age">Age (years)</label>
-          <input type="number" id="age" min="0" step="any" required value={ageYears} onChange={(e)=>setAgeYears(e.target.value)}/>
+        <div className="field">
+          <label htmlFor="age_years">Age (years)</label>
+          <input type="number" id="age_years" placeholder="e.g. 10" min="0" step="any" required value={ageYears} onChange={(e) => setAgeYears(e.target.value)} />
         </div>
 
-        <div>
-          <label htmlFor="distance">Distance to city (km)</label>
-          <input type="number" id="distance" min="0" step="any" required value={distanceKm} onChange={(e)=>setDistanceKm(e.target.value)}/>
+        <div className="field">
+          <label htmlFor="distance_to_city_km">Distance to city (km)</label>
+          <input type="number" id="distance_to_city_km" placeholder="e.g. 5" min="0" step="any" required value={distanceKm} onChange={(e) => setDistanceKm(e.target.value)} />
         </div>
 
-        <button type="submit" disabled={loading}>                 {/* NEW */}
-          {loading ? "Predicting..." : "Predict Price"}           {/* NEW */}
+        <button className="btn" type="submit" disabled={loading}>
+          {loading ? "Predicting..." : "Predict Price"}
         </button>
       </form>
 
-      {error && <p className="error">{error}</p>}                 {/* NEW */}
-      {price !== null && <h2>Predicted price: {price.toLocaleString()}</h2>}
+      {error && <p className="error">{error}</p>}
+
+      {price !== null && (
+        <div className="result">
+          <p className="result-label">Estimated price</p>
+          <p className="result-value">₹{price.toLocaleString('en-IN')}</p>
+        </div>
+      )}
     </div>
   )
 }
